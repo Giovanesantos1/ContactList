@@ -7,3 +7,5 @@ data class Contact(
     val phone: String,
     @DrawableRes val icon: Int
 )
+
+comit verified
