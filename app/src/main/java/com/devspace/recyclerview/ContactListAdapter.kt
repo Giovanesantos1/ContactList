@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 class ContactListAdapter :
     ListAdapter<Contact, ContactListAdapter.ContactViewHolder>(ContactDiffUtils()) {
 
+        private lateinit var onClickListener: (Contact) -> Unit
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list,parent,false)
         return ContactViewHolder(view)
@@ -19,17 +21,21 @@ class ContactListAdapter :
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = getItem(position)
-        holder.bind(contact)
+        holder.bind(contact, onClickListener)
     }
 
-    class ContactViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    fun setOnClickListener(onClick: (Contact) -> Unit) {
+        onClickListener = onClick
+    }
+
+    class ContactViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         private val tvname = view.findViewById<TextView>(R.id.tv_name)
         private val tvphone = view.findViewById<TextView>(R.id.tv_phone)
         private val image = view.findViewById<ImageView>(R.id.Iv_image)
 
-        fun bind(contact: Contact) {
+        fun bind(contact: Contact, onClick: (Contact) -> Unit) {
             tvname.text = contact.name
-            tvphone.text = contact.name
+            tvphone.text = contact.phone
             image.setImageResource(contact.icon)
         }
 
