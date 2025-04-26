@@ -37,6 +37,10 @@ class ContactListAdapter :
             tvname.text = contact.name
             tvphone.text = contact.phone
             image.setImageResource(contact.icon)
+
+            view.setOnClickListener {
+                onClick(contact)
+            }
         }
 
     }
